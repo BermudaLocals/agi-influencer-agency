@@ -1,27 +1,875 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGI Influencer Agency</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#1E40AF',
-                        secondary: '#D4AF37'
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dollar Double Empire — AI Influencer Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg-primary:#0a0a0f;
+  --bg-card:#1a1a2e;
+  --bg-card-hover:#222240;
+  --accent:#00d4ff;
+  --accent-glow:rgba(0,212,255,0.15);
+  --secondary:#ff6b6b;
+  --secondary-glow:rgba(255,107,107,0.15);
+  --text:#ffffff;
+  --text-muted:#8a8aa3;
+  --text-dim:#6a6a80;
+  --gradient-accent:linear-gradient(135deg,#00d4ff,#7b2fff);
+  --gradient-hero:linear-gradient(135deg,#00d4ff 0%,#7b2fff 50%,#ff6b6b 100%);
+  --gradient-card:linear-gradient(145deg,#1a1a2e,#16162a);
+  --glass:rgba(26,26,46,0.6);
+  --glass-border:rgba(0,212,255,0.1);
+  --radius:16px;
+  --radius-sm:10px;
+  --radius-xs:6px;
+  --shadow:0 8px 32px rgba(0,0,0,0.4);
+  --shadow-glow:0 0 40px rgba(0,212,255,0.08);
+  --transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg-primary);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+img{max-width:100%;display:block}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* ===== NAVBAR ===== */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;transition:var(--transition);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(10,10,15,0.8);border-bottom:1px solid transparent}
+.navbar.scrolled{border-bottom:1px solid var(--glass-border);background:rgba(10,10,15,0.95)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 24px}
+.nav-logo{font-size:1.25rem;font-weight:800;letter-spacing:-0.5px}
+.nav-logo span{background:var(--gradient-hero);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:0.875rem;font-weight:500;color:var(--text-muted);transition:var(--transition);position:relative}
+.nav-links a:hover{color:var(--text)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition)}
+.nav-links a:hover::after{width:100%}
+.nav-auth{display:flex;align-items:center;gap:12px}
+.btn-ghost{padding:8px 20px;font-size:0.875rem;font-weight:500;color:var(--text-muted);background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-xs);cursor:pointer;transition:var(--transition);font-family:inherit}
+.btn-ghost:hover{color:var(--text);border-color:var(--accent);background:var(--accent-glow)}
+.btn-primary{padding:8px 24px;font-size:0.875rem;font-weight:600;color:var(--bg-primary);background:var(--accent);border:none;border-radius:var(--radius-xs);cursor:pointer;transition:var(--transition);font-family:inherit}
+.btn-primary:hover{background:#33ddff;transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,212,255,0.3)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{width:24px;height:2px;background:var(--text);transition:var(--transition)}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:rgba(10,10,15,0.98);backdrop-filter:blur(20px);padding:40px 24px;z-index:999}
+.mobile-menu.active{display:flex;flex-direction:column;gap:24px;animation:fadeIn 0.3s ease}
+.mobile-menu a{font-size:1.1rem;font-weight:500;color:var(--text-muted);padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.mobile-menu a:hover{color:var(--text)}
+
+/* ===== HERO ===== */
+.hero{padding:160px 0 100px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,255,0.08) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-100px;left:-200px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,107,107,0.05) 0%,transparent 70%);pointer-events:none}
+.hero-content{position:relative;z-index:1;text-align:center;max-width:900px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--accent-glow);border:1px solid rgba(0,212,255,0.2);border-radius:100px;font-size:0.8rem;font-weight:600;color:var(--accent);margin-bottom:32px;letter-spacing:0.5px;text-transform:uppercase}
+.hero-badge .pulse{width:8px;height:8px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.5)}}
+.hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;line-height:1.1;letter-spacing:-2px;margin-bottom:24px}
+.hero h1 .gradient-text{background:var(--gradient-hero);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:clamp(1rem,2vw,1.25rem);color:var(--text-muted);max-width:640px;margin:0 auto 40px;line-height:1.7}
+.hero-cta{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.btn-hero{padding:16px 40px;font-size:1rem;font-weight:700;border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);font-family:inherit;border:none}
+.btn-hero-primary{color:#000;background:var(--accent);box-shadow:0 4px 30px rgba(0,212,255,0.25)}
+.btn-hero-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(0,212,255,0.4);background:#33ddff}
+.btn-hero-outline{color:var(--text);background:transparent;border:1px solid rgba(255,255,255,0.15)}
+.btn-hero-outline:hover{border-color:var(--accent);background:var(--accent-glow)}
+
+/* ===== STATS BAR ===== */
+.stats-bar{padding:40px 0;border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(26,26,46,0.3)}
+.stats-inner{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-number{font-size:2rem;font-weight:800;background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:0.85rem;color:var(--text-muted);margin-top:4px}
+.stat-divider{width:1px;height:40px;background:rgba(255,255,255,0.08)}
+
+/* ===== SECTION COMMON ===== */
+section{padding:100px 0}
+.section-label{display:inline-flex;align-items:center;gap:8px;font-size:0.75rem;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+.section-title{font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-1px;margin-bottom:16px}
+.section-subtitle{font-size:1.05rem;color:var(--text-muted);max-width:560px;line-height:1.7}
+.section-header{text-align:center;margin-bottom:64px}
+.section-header .section-subtitle{margin:0 auto}
+
+/* ===== INFLUENCER GRID ===== */
+.influencer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.influencer-card{background:var(--gradient-card);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);padding:32px 24px;text-align:center;transition:var(--transition);position:relative;overflow:hidden}
+.influencer-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-accent);opacity:0;transition:var(--transition)}
+.influencer-card:hover{transform:translateY(-4px);border-color:rgba(0,212,255,0.15);box-shadow:var(--shadow-glow)}
+.influencer-card:hover::before{opacity:1}
+.influencer-avatar{width:90px;height:90px;border-radius:50%;margin:0 auto 20px;position:relative}
+.influencer-avatar .avatar-ring{position:absolute;inset:-3px;border-radius:50%;border:2px solid transparent;background:var(--gradient-accent);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:3px}
+.influencer-avatar .avatar-img{width:90px;height:90px;border-radius:50%}
+.avatar-gradient-1{background:linear-gradient(135deg,#00d4ff,#7b2fff)}
+.avatar-gradient-2{background:linear-gradient(135deg,#ff6b6b,#ee5a24)}
+.avatar-gradient-3{background:linear-gradient(135deg,#7b2fff,#ff6b6b)}
+.avatar-gradient-4{background:linear-gradient(135deg,#00d4ff,#00b894)}
+.avatar-gradient-5{background:linear-gradient(135deg,#fdcb6e,#e17055)}
+.avatar-gradient-6{background:linear-gradient(135deg,#a29bfe,#6c5ce7)}
+.influencer-name{font-size:1.15rem;font-weight:700;margin-bottom:4px}
+.influencer-handle{font-size:0.8rem;color:var(--accent);margin-bottom:12px;font-weight:500}
+.influencer-niche{display:inline-block;padding:4px 14px;background:var(--accent-glow);border:1px solid rgba(0,212,255,0.15);border-radius:100px;font-size:0.7rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.influencer-stats{display:flex;justify-content:center;gap:24px;margin-bottom:20px}
+.influencer-stat{text-align:center}
+.influencer-stat-value{font-size:1rem;font-weight:700}
+.influencer-stat-label{font-size:0.7rem;color:var(--text-dim)}
+.btn-book{padding:10px 28px;font-size:0.85rem;font-weight:600;color:#000;background:var(--accent);border:none;border-radius:var(--radius-xs);cursor:pointer;transition:var(--transition);font-family:inherit;width:100%}
+.btn-book:hover{background:#33ddff;box-shadow:0 4px 20px rgba(0,212,255,0.3)}
+
+/* ===== HOW IT WORKS ===== */
+.how-it-works{background:rgba(26,26,46,0.2)}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;position:relative}
+.steps-grid::before{content:'';position:absolute;top:50px;left:16.66%;right:16.66%;height:2px;background:linear-gradient(90deg,var(--accent),var(--secondary));opacity:0.2}
+.step-card{text-align:center;position:relative;z-index:1}
+.step-number{width:80px;height:80px;border-radius:50%;background:var(--gradient-card);border:2px solid rgba(0,212,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;color:var(--accent);margin:0 auto 24px;transition:var(--transition)}
+.step-card:hover .step-number{border-color:var(--accent);box-shadow:0 0 30px rgba(0,212,255,0.15);transform:scale(1.05)}
+.step-card h3{font-size:1.25rem;font-weight:700;margin-bottom:12px}
+.step-card p{font-size:0.9rem;color:var(--text-muted);max-width:300px;margin:0 auto;line-height:1.6}
+
+/* ===== PLATFORM FEATURES ===== */
+.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.feature-card{background:var(--gradient-card);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);padding:32px 24px;text-align:center;transition:var(--transition)}
+.feature-card:hover{transform:translateY(-4px);border-color:rgba(0,212,255,0.15);box-shadow:var(--shadow-glow)}
+.feature-icon{width:56px;height:56px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 20px}
+.feature-icon.blue{background:var(--accent-glow);color:var(--accent)}
+.feature-icon.pink{background:var(--secondary-glow);color:var(--secondary)}
+.feature-icon.purple{background:rgba(123,47,255,0.12);color:#7b2fff}
+.feature-icon.green{background:rgba(0,184,148,0.12);color:#00b894}
+.feature-card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.feature-card p{font-size:0.85rem;color:var(--text-muted);line-height:1.6}
+
+/* ===== PRICING ===== */
+.pricing{background:rgba(26,26,46,0.2)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start}
+.pricing-card{background:var(--gradient-card);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);padding:40px 32px;position:relative;transition:var(--transition)}
+.pricing-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-glow)}
+.pricing-card.featured{border-color:rgba(0,212,255,0.3);box-shadow:0 0 60px rgba(0,212,255,0.08)}
+.pricing-card.featured::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:4px 20px;background:var(--accent);color:#000;font-size:0.7rem;font-weight:700;border-radius:100px;letter-spacing:1px}
+.pricing-tier{font-size:0.8rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.pricing-price{font-size:3rem;font-weight:900;letter-spacing:-2px;margin-bottom:4px}
+.pricing-price span{font-size:1rem;font-weight:400;color:var(--text-muted)}
+.pricing-desc{font-size:0.9rem;color:var(--text-muted);margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.pricing-features{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
+.pricing-feature{display:flex;align-items:center;gap:12px;font-size:0.9rem;color:var(--text-muted)}
+.pricing-feature .check{color:var(--accent);font-weight:700;font-size:1rem}
+.btn-pricing{display:block;width:100%;padding:14px;font-size:0.95rem;font-weight:700;text-align:center;border-radius:var(--radius-xs);cursor:pointer;transition:var(--transition);font-family:inherit;border:none}
+.btn-pricing-primary{color:#000;background:var(--accent)}
+.btn-pricing-primary:hover{background:#33ddff;box-shadow:0 4px 20px rgba(0,212,255,0.3)}
+.btn-pricing-outline{color:var(--text);background:transparent;border:1px solid rgba(255,255,255,0.1)}
+.btn-pricing-outline:hover{border-color:var(--accent);background:var(--accent-glow)}
+
+/* ===== TESTIMONIALS ===== */
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.testimonial-card{background:var(--gradient-card);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);padding:32px;transition:var(--transition)}
+.testimonial-card:hover{transform:translateY(-2px);border-color:rgba(0,212,255,0.1)}
+.testimonial-stars{display:flex;gap:4px;margin-bottom:16px;color:#fdcb6e;font-size:0.9rem}
+.testimonial-text{font-size:0.95rem;color:var(--text-muted);line-height:1.7;margin-bottom:24px;font-style:italic}
+.testimonial-author{display:flex;align-items:center;gap:12px}
+.testimonial-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;color:#000}
+.testimonial-info h4{font-size:0.9rem;font-weight:600}
+.testimonial-info p{font-size:0.75rem;color:var(--text-dim)}
+
+/* ===== CTA ===== */
+.cta-section{padding:120px 0;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,212,255,0.06) 0%,transparent 70%)}
+.cta-inner{position:relative;z-index:1;text-align:center;max-width:700px;margin:0 auto}
+.cta-inner h2{font-size:clamp(2rem,4vw,3.2rem);font-weight:900;letter-spacing:-1px;margin-bottom:16px}
+.cta-inner p{font-size:1.1rem;color:var(--text-muted);margin-bottom:40px;line-height:1.7}
+.btn-cta{padding:18px 48px;font-size:1.1rem;font-weight:700;color:#000;background:var(--accent);border:none;border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);font-family:inherit;box-shadow:0 4px 30px rgba(0,212,255,0.25)}
+.btn-cta:hover{transform:translateY(-2px);box-shadow:0 8px 50px rgba(0,212,255,0.4);background:#33ddff}
+
+/* ===== FOOTER ===== */
+.footer{padding:60px 0 30px;border-top:1px solid rgba(255,255,255,0.04);background:rgba(10,10,15,0.8)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand h3{font-size:1.3rem;font-weight:800;margin-bottom:12px}
+.footer-brand h3 span{background:var(--gradient-hero);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.footer-brand p{font-size:0.85rem;color:var(--text-muted);line-height:1.7;max-width:300px}
+.footer-col h4{font-size:0.8rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
+.footer-col a{display:block;font-size:0.85rem;color:var(--text-muted);padding:6px 0;transition:var(--transition)}
+.footer-col a:hover{color:var(--text)}
+.footer-social{display:flex;gap:12px;margin-top:20px}
+.footer-social a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--text-muted);transition:var(--transition)}
+.footer-social a:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-glow)}
+.footer-bottom{padding-top:30px;border-top:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-bottom p{font-size:0.8rem;color:var(--text-dim)}
+.footer-bottom a{font-size:0.8rem;color:var(--text-dim);transition:var(--transition)}
+.footer-bottom a:hover{color:var(--accent)}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.fade-in{opacity:0;transform:translateY(20px);transition:all 0.6s cubic-bezier(0.4,0,0.2,1)}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .influencer-grid{grid-template-columns:repeat(2,1fr)}
+  .features-grid{grid-template-columns:repeat(2,1fr)}
+  .pricing-grid{grid-template-columns:repeat(2,1fr)}
+  .pricing-card:last-child{grid-column:span 2;max-width:400px;margin:0 auto}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .nav-links,.nav-auth{display:none}
+  .hamburger{display:flex}
+  .hero{padding:120px 0 60px}
+  .hero h1{font-size:2.2rem;letter-spacing:-1px}
+  .stats-inner{gap:30px}
+  .stat-divider{display:none}
+  .influencer-grid{grid-template-columns:1fr}
+  .steps-grid{grid-template-columns:1fr;gap:40px}
+  .steps-grid::before{display:none}
+  .features-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .pricing-card:last-child{grid-column:span 1;max-width:none}
+  .testimonials-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  section{padding:60px 0}
+  .hero-cta{flex-direction:column}
+  .btn-hero{width:100%}
+}
+
+/* ===== MOBILE MENU AUTH ===== */
+.mobile-auth{display:flex;gap:12px;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06)}
+.mobile-auth button{flex:1}
+/* ===== AUTH MODALS ===== */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center}
+.modal-overlay.active{display:flex;animation:fadeIn 0.25s ease}
+.modal-box{background:var(--bg-card);border:1px solid var(--glass-border);border-radius:var(--radius);padding:40px 36px;width:100%;max-width:440px;position:relative;box-shadow:var(--shadow),var(--shadow-glow)}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:transparent;color:var(--text-muted);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition);font-family:inherit;line-height:1}
+.modal-close:hover{border-color:var(--accent);color:var(--text);background:var(--accent-glow)}
+.modal-title{font-size:1.5rem;font-weight:800;margin-bottom:6px;letter-spacing:-0.5px}
+.modal-subtitle{font-size:0.9rem;color:var(--text-muted);margin-bottom:28px}
+.modal-form{display:flex;flex-direction:column;gap:16px}
+.modal-field{display:flex;flex-direction:column;gap:6px}
+.modal-field label{font-size:0.8rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
+.modal-field input{padding:12px 16px;font-size:0.95rem;font-family:inherit;background:var(--bg-primary);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-xs);color:var(--text);outline:none;transition:var(--transition)}
+.modal-field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.modal-field input::placeholder{color:var(--text-dim)}
+.btn-modal-submit{padding:14px;font-size:1rem;font-weight:700;color:#000;background:var(--accent);border:none;border-radius:var(--radius-xs);cursor:pointer;transition:var(--transition);font-family:inherit;margin-top:8px}
+.btn-modal-submit:hover{background:#33ddff;box-shadow:0 4px 20px rgba(0,212,255,0.3);transform:translateY(-1px)}
+.btn-modal-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}
+.modal-switch{text-align:center;margin-top:20px;font-size:0.85rem;color:var(--text-muted)}
+.modal-switch a{color:var(--accent);font-weight:600;cursor:pointer;transition:var(--transition)}
+.modal-switch a:hover{text-decoration:underline}
+.modal-message{padding:12px 16px;border-radius:var(--radius-xs);font-size:0.85rem;font-weight:500;display:none;margin-bottom:4px;text-align:center}
+.modal-message.success{display:block;background:rgba(0,184,148,0.12);border:1px solid rgba(0,184,148,0.3);color:#00b894}
+.modal-message.error{display:block;background:var(--secondary-glow);border:1px solid rgba(255,107,107,0.3);color:var(--secondary)}
+@media(max-width:768px){.modal-box{margin:16px;padding:32px 24px}}
+</style>
 </head>
-<body class="bg-gray-900 text-white">
-    <div class="container mx-auto p-4">
-        <h1 class="text-4xl font-bold text-primary">AGI Influencer Agency</h1>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo"><span>Dollar Double</span> Empire</div>
+    <div class="nav-links">
+      <a href="#influencers">Influencers</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#reviews">Reviews</a>
     </div>
+    <div class="nav-auth">
+      <button class="btn-ghost" onclick="handleSignIn()">Sign In</button>
+      <button class="btn-primary" onclick="handleGetStarted()">Get Started</button>
+    </div>
+    <div class="hamburger" onclick="toggleMobile()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#influencers" onclick="closeMobile()">Influencers</a>
+  <a href="#how-it-works" onclick="closeMobile()">How It Works</a>
+  <a href="#pricing" onclick="closeMobile()">Pricing</a>
+  <a href="#reviews" onclick="closeMobile()">Reviews</a>
+  <div class="mobile-auth">
+    <button class="btn-ghost" onclick="handleSignIn()">Sign In</button>
+    <button class="btn-primary" onclick="handleGetStarted()">Get Started</button>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="pulse"></span> AI-Powered Influencer Platform</div>
+      <h1>Hire AI Influencers<br><span class="gradient-text">That Never Sleep</span></h1>
+      <p>Deploy hyper-realistic AI influencers across TikTok, Instagram &amp; YouTube. Zero drama, unlimited content, guaranteed ROI — powered by the Dollar Double Empire.</p>
+      <div class="hero-cta">
+        <button class="btn-hero btn-hero-primary" onclick="handleGetStarted()">Start Your Campaign</button>
+        <button class="btn-hero btn-hero-outline" onclick="document.getElementById('influencers').scrollIntoView({behavior:'smooth'})">Browse Influencers</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS BAR ===== -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-number">79</div>
+        <div class="stat-label">AI Influencers Active Now</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-number">2.1B+</div>
+        <div class="stat-label">Impressions Generated</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-number">340%</div>
+        <div class="stat-label">Average ROI</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-number">12K+</div>
+        <div class="stat-label">Campaigns Launched</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FEATURED INFLUENCERS ===== -->
+<section id="influencers">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">⚡ Featured Roster</div>
+      <h2 class="section-title">Meet Our AI Influencers</h2>
+      <p class="section-subtitle">Hyper-realistic digital personalities ready to represent your brand across every platform.</p>
+    </div>
+    <div class="influencer-grid">
+
+      <!-- Influencer 1 -->
+      <div class="influencer-card fade-in">
+        <div class="influencer-avatar">
+          <div class="avatar-ring"></div>
+          <div class="avatar-img avatar-gradient-1"></div>
+        </div>
+        <div class="influencer-name">Aria Eclipse</div>
+        <div class="influencer-handle">@aria.eclipse</div>
+        <div class="influencer-niche">Fashion & Lifestyle</div>
+        <div class="influencer-stats">
+          <div class="influencer-stat"><div class="influencer-stat-value">2.4M</div><div class="influencer-stat-label">Followers</div></div>
+          <div class="influencer-stat"><div class="influencer-stat-value">8.7%</div><div class="influencer-stat-label">Engagement</div></div>
+        </div>
+        <button class="btn-book">Book Now</button>
+      </div>
+
+      <!-- Influencer 2 -->
+      <div class="influencer-card fade-in">
+        <div class="influencer-avatar">
+          <div class="avatar-ring"></div>
+          <div class="avatar-img avatar-gradient-2"></div>
+        </div>
+        <div class="influencer-name">Kai Voltage</div>
+        <div class="influencer-handle">@kai.voltage</div>
+        <div class="influencer-niche">Tech & Gaming</div>
+        <div class="influencer-stats">
+          <div class="influencer-stat"><div class="influencer-stat-value">1.8M</div><div class="influencer-stat-label">Followers</div></div>
+          <div class="influencer-stat"><div class="influencer-stat-value">11.2%</div><div class="influencer-stat-label">Engagement</div></div>
+        </div>
+        <button class="btn-book">Book Now</button>
+      </div>
+
+      <!-- Influencer 3 -->
+      <div class="influencer-card fade-in">
+        <div class="influencer-avatar">
+          <div class="avatar-ring"></div>
+          <div class="avatar-img avatar-gradient-3"></div>
+        </div>
+        <div class="influencer-name">Luna Prism</div>
+        <div class="influencer-handle">@luna.prism</div>
+        <div class="influencer-niche">Beauty & Wellness</div>
+        <div class="influencer-stats">
+          <div class="influencer-stat"><div class="influencer-stat-value">3.1M</div><div class="influencer-stat-label">Followers</div></div>
+          <div class="influencer-stat"><div class="influencer-stat-value">9.4%</div><div class="influencer-stat-label">Engagement</div></div>
+        </div>
+        <button class="btn-book">Book Now</button>
+      </div>
+
+      <!-- Influencer 4 -->
+      <div class="influencer-card fade-in">
+        <div class="influencer-avatar">
+          <div class="avatar-ring"></div>
+          <div class="avatar-img avatar-gradient-4"></div>
+        </div>
+        <div class="influencer-name">Nova Sterling</div>
+        <div class="influencer-handle">@nova.sterling</div>
+        <div class="influencer-niche">Fitness & Health</div>
+        <div class="influencer-stats">
+          <div class="influencer-stat"><div class="influencer-stat-value">1.5M</div><div class="influencer-stat-label">Followers</div></div>
+          <div class="influencer-stat"><div class="influencer-stat-value">12.1%</div><div class="influencer-stat-label">Engagement</div></div>
+        </div>
+        <button class="btn-book">Book Now</button>
+      </div>
+
+      <!-- Influencer 5 -->
+      <div class="influencer-card fade-in">
+        <div class="influencer-avatar">
+          <div class="avatar-ring"></div>
+          <div class="avatar-img avatar-gradient-5"></div>
+        </div>
+        <div class="influencer-name">Zara Neon</div>
+        <div class="influencer-handle">@zara.neon</div>
+        <div class="influencer-niche">Travel & Luxury</div>
+        <div class="influencer-stats">
+          <div class="influencer-stat"><div class="influencer-stat-value">2.8M</div><div class="influencer-stat-label">Followers</div></div>
+          <div class="influencer-stat"><div class="influencer-stat-value">7.6%</div><div class="influencer-stat-label">Engagement</div></div>
+        </div>
+        <button class="btn-book">Book Now</button>
+      </div>
+
+      <!-- Influencer 6 -->
+      <div class="influencer-card fade-in">
+        <div class="influencer-avatar">
+          <div class="avatar-ring"></div>
+          <div class="avatar-img avatar-gradient-6"></div>
+        </div>
+        <div class="influencer-name">Lex Cipher</div>
+        <div class="influencer-handle">@lex.cipher</div>
+        <div class="influencer-niche">Finance & Crypto</div>
+        <div class="influencer-stats">
+          <div class="influencer-stat"><div class="influencer-stat-value">980K</div><div class="influencer-stat-label">Followers</div></div>
+          <div class="influencer-stat"><div class="influencer-stat-value">14.3%</div><div class="influencer-stat-label">Engagement</div></div>
+        </div>
+        <button class="btn-book">Book Now</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="how-it-works" id="how-it-works">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">🚀 Simple Process</div>
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-subtitle">Launch your AI influencer campaign in three effortless steps.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card fade-in">
+        <div class="step-number">1</div>
+        <h3>Choose Your Influencer</h3>
+        <p>Browse our roster of 79+ AI personalities. Filter by niche, audience demographics, platform, and engagement rate.</p>
+      </div>
+      <div class="step-card fade-in">
+        <div class="step-number">2</div>
+        <h3>Set Your Campaign</h3>
+        <p>Define your brand voice, content schedule, target audience, and KPIs. Our AI handles the rest — posts, reels, stories, and lives.</p>
+      </div>
+      <div class="step-card fade-in">
+        <div class="step-number">3</div>
+        <h3>Watch Your ROI</h3>
+        <p>Track impressions, engagement, conversions, and revenue in real-time. Average clients see 340% ROI within 30 days.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PLATFORM FEATURES ===== -->
+<section id="features">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">✨ Why Choose Us</div>
+      <h2 class="section-title">The Unfair Advantage</h2>
+      <p class="section-subtitle">AI influencers outperform human creators in every metric that matters.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-icon blue">🕐</div>
+        <h3>24/7 Content</h3>
+        <p>Your AI influencers never sleep, never take breaks. Continuous content output across all timezones.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon pink">🎭</div>
+        <h3>Zero Drama</h3>
+        <p>No scandals, no controversies, no cancellations. Complete brand safety guaranteed by design.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon green">📈</div>
+        <h3>Guaranteed ROI</h3>
+        <p>Data-driven content optimization ensures every post moves the needle. 340% average return.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon purple">🌐</div>
+        <h3>Multi-Platform</h3>
+        <p>Native content for TikTok, Instagram, YouTube, X, and LinkedIn — all from a single dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">💎 Pricing Plans</div>
+      <h2 class="section-title">Scale Your Influence</h2>
+      <p class="section-subtitle">From solo campaigns to enterprise-wide deployments.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <!-- Starter -->
+      <div class="pricing-card fade-in">
+        <div class="pricing-tier">Starter</div>
+        <div class="pricing-price">$499<span>/mo</span></div>
+        <div class="pricing-desc">Perfect for testing the waters with AI influencer marketing.</div>
+        <div class="pricing-features">
+          <div class="pricing-feature"><span class="check">✓</span> 1 AI Influencer</div>
+          <div class="pricing-feature"><span class="check">✓</span> 30 posts/month</div>
+          <div class="pricing-feature"><span class="check">✓</span> 2 platforms (IG + TikTok)</div>
+          <div class="pricing-feature"><span class="check">✓</span> Basic analytics dashboard</div>
+          <div class="pricing-feature"><span class="check">✓</span> Email support</div>
+        </div>
+        <button class="btn-pricing btn-pricing-outline" onclick="handleGetStarted()">Get Started</button>
+      </div>
+
+      <!-- Pro -->
+      <div class="pricing-card featured fade-in">
+        <div class="pricing-tier">Pro</div>
+        <div class="pricing-price">$1,499<span>/mo</span></div>
+        <div class="pricing-desc">For brands serious about dominating social media at scale.</div>
+        <div class="pricing-features">
+          <div class="pricing-feature"><span class="check">✓</span> 5 AI Influencers</div>
+          <div class="pricing-feature"><span class="check">✓</span> Unlimited posts</div>
+          <div class="pricing-feature"><span class="check">✓</span> All platforms</div>
+          <div class="pricing-feature"><span class="check">✓</span> Advanced analytics + ROI tracking</div>
+          <div class="pricing-feature"><span class="check">✓</span> Custom brand voice tuning</div>
+          <div class="pricing-feature"><span class="check">✓</span> Priority support</div>
+        </div>
+        <button class="btn-pricing btn-pricing-primary" onclick="handleGetStarted()">Get Started</button>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pricing-card fade-in">
+        <div class="pricing-tier">Enterprise</div>
+        <div class="pricing-price">$4,999<span>/mo</span></div>
+        <div class="pricing-desc">Full-scale AI influencer operations for industry leaders.</div>
+        <div class="pricing-features">
+          <div class="pricing-feature"><span class="check">✓</span> Unlimited AI Influencers</div>
+          <div class="pricing-feature"><span class="check">✓</span> Unlimited posts</div>
+          <div class="pricing-feature"><span class="check">✓</span> All platforms + emerging</div>
+          <div class="pricing-feature"><span class="check">✓</span> White-label dashboard</div>
+          <div class="pricing-feature"><span class="check">✓</span> Custom influencer creation</div>
+          <div class="pricing-feature"><span class="check">✓</span> Dedicated success manager</div>
+          <div class="pricing-feature"><span class="check">✓</span> API access</div>
+        </div>
+        <button class="btn-pricing btn-pricing-outline" onclick="handleGetStarted()">Contact Sales</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section id="reviews">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">💬 Client Success</div>
+      <h2 class="section-title">Trusted by Leading Brands</h2>
+      <p class="section-subtitle">See how companies are transforming their marketing with AI influencers.</p>
+    </div>
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card fade-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-text">"We replaced our entire influencer budget with AI influencers from Dollar Double Empire. Our engagement tripled and costs dropped 70%. This is the future of marketing."</div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:linear-gradient(135deg,#00d4ff,#7b2fff)">JM</div>
+          <div class="testimonial-info">
+            <h4>Jessica Martinez</h4>
+            <p>CMO, NovaBrand Cosmetics</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-text">"The AI influencers produce content at a pace and quality we never thought possible. 500 posts in our first month, zero PR crises. An absolute game-changer."</div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:linear-gradient(135deg,#ff6b6b,#ee5a24)">RK</div>
+          <div class="testimonial-info">
+            <h4>Ryan Kim</h4>
+            <p>Head of Growth, FitVerse</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-text">"We went from 10K impressions/month to 45M in 90 days. The ROI dashboard alone is worth the investment. Dollar Double Empire turned our DTC brand into a powerhouse."</div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:linear-gradient(135deg,#a29bfe,#6c5ce7)">SP</div>
+          <div class="testimonial-info">
+            <h4>Sarah Patel</h4>
+            <p>Founder, Luxe & Co.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner">
+      <h2>Ready to <span class="gradient-text">Dominate Social?</span></h2>
+      <p>Join 12,000+ brands leveraging AI influencers to drive revenue on autopilot. Start your first campaign in under 5 minutes.</p>
+      <button class="btn-cta" onclick="handleGetStarted()">Start Your Campaign →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3><span>Dollar Double</span> Empire</h3>
+        <p>The world's premier AI influencer agency. Powering the next generation of digital marketing with hyper-realistic virtual creators.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter">𝕏</a>
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="TikTok">TT</a>
+          <a href="#" aria-label="YouTube">YT</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="#influencers">Browse Influencers</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#">API Docs</a>
+        <a href="#">Changelog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Blog</a>
+        <a href="#">Press Kit</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">Acceptable Use</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Dollar Double Empire. All rights reserved.</p>
+      <a href="mailto:hello@doubledouble.empire">hello@doubledouble.empire</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ===== AUTH MODALS ===== -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal(document.getElementById('loginModal'))" aria-label="Close">&times;</button>
+    <div class="modal-title">Welcome Back</div>
+    <div class="modal-subtitle">Sign in to your Dollar Double Empire account.</div>
+    <div class="modal-message" id="loginMsg"></div>
+    <form class="modal-form" id="loginForm">
+      <div class="modal-field">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" name="email" placeholder="you@example.com" required autocomplete="email">
+      </div>
+      <div class="modal-field">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" name="password" placeholder="Your password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn-modal-submit">Sign In</button>
+    </form>
+    <div class="modal-switch">Don't have an account? <a onclick="handleGetStarted()">Get Started</a></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="registerModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal(document.getElementById('registerModal'))" aria-label="Close">&times;</button>
+    <div class="modal-title">Get Started</div>
+    <div class="modal-subtitle">Create your account and launch AI influencer campaigns.</div>
+    <div class="modal-message" id="registerMsg"></div>
+    <form class="modal-form" id="registerForm">
+      <div class="modal-field">
+        <label for="registerName">Full Name</label>
+        <input type="text" id="registerName" name="name" placeholder="Your full name" required autocomplete="name">
+      </div>
+      <div class="modal-field">
+        <label for="registerEmail">Email</label>
+        <input type="email" id="registerEmail" name="email" placeholder="you@example.com" required autocomplete="email">
+      </div>
+      <div class="modal-field">
+        <label for="registerPassword">Password</label>
+        <input type="password" id="registerPassword" name="password" placeholder="Min. 6 characters" required autocomplete="new-password">
+      </div>
+      <button type="submit" class="btn-modal-submit">Create Account</button>
+    </form>
+    <div class="modal-switch">Already have an account? <a onclick="handleSignIn()">Sign In</a></div>
+  </div>
+</div>
+
+<script>
+// Navbar scroll effect
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Mobile menu
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('active');
+}
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.remove('active');
+}
+
+// Auth modals
+const loginOverlay = document.getElementById('loginModal');
+const registerOverlay = document.getElementById('registerModal');
+const loginMsg = document.getElementById('loginMsg');
+const registerMsg = document.getElementById('registerMsg');
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
+
+function openModal(overlay) {
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  const firstInput = overlay.querySelector('input');
+  if (firstInput) setTimeout(() => firstInput.focus(), 100);
+}
+function closeModal(overlay) {
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+  const msg = overlay.querySelector('.modal-message');
+  if (msg) { msg.className = 'modal-message'; msg.textContent = ''; }
+}
+function showMsg(el, type, text) {
+  el.className = 'modal-message ' + type;
+  el.textContent = text;
+}
+
+function handleSignIn() {
+  closeMobile();
+  closeModal(registerOverlay);
+  openModal(loginOverlay);
+}
+function handleGetStarted() {
+  closeMobile();
+  closeModal(loginOverlay);
+  openModal(registerOverlay);
+}
+
+// Close on overlay click
+[loginOverlay, registerOverlay].forEach(ov => {
+  ov.addEventListener('click', e => { if (e.target === ov) closeModal(ov); });
+});
+// Close on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (loginOverlay.classList.contains('active')) closeModal(loginOverlay);
+    if (registerOverlay.classList.contains('active')) closeModal(registerOverlay);
+  }
+});
+
+// Login form submit
+loginForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = loginForm.querySelector('button[type="submit"]');
+  const email = loginForm.querySelector('input[name="email"]').value.trim();
+  const password = loginForm.querySelector('input[name="password"]').value;
+  if (!email || !password) { showMsg(loginMsg, 'error', 'Please fill in all fields.'); return; }
+  btn.disabled = true; btn.textContent = 'Signing in…';
+  loginMsg.className = 'modal-message'; loginMsg.textContent = '';
+  try {
+    const res = await fetch('/agency/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json().catch(() => null);
+    if (res.ok) {
+      showMsg(loginMsg, 'success', data?.message || 'Login successful! Redirecting…');
+      if (data?.token) localStorage.setItem('token', data.token);
+      setTimeout(() => { window.location.href = data?.redirect || '/agency/dashboard'; }, 1200);
+    } else {
+      showMsg(loginMsg, 'error', data?.error || data?.message || 'Invalid credentials. Please try again.');
+      btn.disabled = false; btn.textContent = 'Sign In';
+    }
+  } catch {
+    showMsg(loginMsg, 'error', 'Network error. Please check your connection and try again.');
+    btn.disabled = false; btn.textContent = 'Sign In';
+  }
+});
+
+// Register form submit
+registerForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = registerForm.querySelector('button[type="submit"]');
+  const name = registerForm.querySelector('input[name="name"]').value.trim();
+  const email = registerForm.querySelector('input[name="email"]').value.trim();
+  const password = registerForm.querySelector('input[name="password"]').value;
+  if (!name || !email || !password) { showMsg(registerMsg, 'error', 'Please fill in all fields.'); return; }
+  if (password.length < 6) { showMsg(registerMsg, 'error', 'Password must be at least 6 characters.'); return; }
+  btn.disabled = true; btn.textContent = 'Creating account…';
+  registerMsg.className = 'modal-message'; registerMsg.textContent = '';
+  try {
+    const res = await fetch('/agency/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password })
+    });
+    const data = await res.json().catch(() => null);
+    if (res.ok) {
+      showMsg(registerMsg, 'success', data?.message || 'Account created! Redirecting…');
+      if (data?.token) localStorage.setItem('token', data.token);
+      setTimeout(() => { window.location.href = data?.redirect || '/agency/dashboard'; }, 1200);
+    } else {
+      showMsg(registerMsg, 'error', data?.error || data?.message || 'Registration failed. Please try again.');
+      btn.disabled = false; btn.textContent = 'Create Account';
+    }
+  } catch {
+    showMsg(registerMsg, 'error', 'Network error. Please check your connection and try again.');
+    btn.disabled = false; btn.textContent = 'Create Account';
+  }
+});
+
+
+// Intersection Observer for fade-in animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Smooth scroll for all anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
 </body>
 </html>
